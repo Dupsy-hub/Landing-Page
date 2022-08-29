@@ -1,37 +1,6 @@
-/**
- *
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
- *
- * Dependencies: None
- *
- * JS Version: ES2015/ES6
- *
- * JS Standard: ESlint
- *
- */
-
-/**
- * Comments should be present at the beginning of each procedure and class.
- * Great to have comments before crucial code sections within the procedure.
- */
-
-/**
- * Define Global Variables
- *
- */
 // Nav Menu Global Variables
 const navMenu = document.getElementById("navbar__list");
 const sections = document.querySelectorAll("section");
-
-/**
- * End Global Variables
- * Start Helper Functions
- *
-
-*/
 
 // build the nav
 const buildNav = () => {
@@ -71,7 +40,7 @@ const removeActiveSection = (section) => {
   navMenu.childNodes[sectionId].style.backgroundColor = "white";
 };
 
-//implementing the sectionActivation function
+// implementing the sectionActivation function
 const sectionActivation = () => {
   sections.forEach((section) => {
     const elementOffset = offset(section);
@@ -81,7 +50,7 @@ const sectionActivation = () => {
   });
 };
 
-// Scroll to anchor ID using scrollTO event
+// scroll to anchor ID using scrollTO event
 const scrolling = () => {
   const links = document.querySelectorAll(".navbar__menu a");
   links.forEach((link) => {
@@ -97,11 +66,10 @@ const scrolling = () => {
   });
 };
 
+// configure listener once th epage has been loaded
 document.addEventListener("DOMContentLoaded", () => {
   buildNav();
   scrolling();
 
   window.addEventListener("scroll", sectionActivation);
 });
-
-// End of Code
