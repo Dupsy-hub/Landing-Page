@@ -25,10 +25,11 @@ const observerCallback = (entries) => {
     const sectionId = +target.id[target.id.length - 1] - 1;
 
     if (entries[i].isIntersecting) {
-      target.classList.add("active");
+      target.classList.add("your-active-class");
       target.style.backgroundColor = "#FF0000";
       navMenu.childNodes[sectionId].style.backgroundColor = "#FF0000";
     } else {
+      target.classList.remove("your-active-class");
       target.style.backgroundColor = "";
       navMenu.childNodes[sectionId].style.backgroundColor = "";
     }
