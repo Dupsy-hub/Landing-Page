@@ -1,16 +1,16 @@
 /**
- * 
+ *
  * Manipulating the DOM exercise.
  * Exercise programmatically builds navigation,
  * scrolls to anchors from navigation,
  * and highlights section in viewport upon scrolling.
- * 
+ *
  * Dependencies: None
- * 
+ *
  * JS Version: ES2015/ES6
- * 
+ *
  * JS Standard: ESlint
- * 
+ *
 */
 
 /**
@@ -20,7 +20,7 @@
 
 /**
  * Define Global Variables
- * 
+ *
 */
 // Nav Menu Global Variables
 const navMenu = document.getElementById("navbar__list");
@@ -30,28 +30,20 @@ const fragment = document.createDocumentFragment();
 /**
  * End Global Variables
  * Start Helper Functions
- * 
+ *
 
 */
 
 // build the nav
 const buildNav= () => {
-    let navUI = "";
     //for loop to create sections as number of sections in HTML file
     for (let i=0; i < sections.length; i++) {
         const sectionId = sections[i].getAttribute('id');
         const sectionName = sections[i].getAttribute('data-nav');
-        navUI += `<li><a class= "menu__link" href= "#${sectionId}">${sectionName}</a></li>`
-        navMenu.innerHTML = navUI;        
+        navMenu.innerHTML += `<li><a class= "menu__link" href= "#${sectionId}">${sectionName}</a></li>`
     }
-    //add fragment document to ul in HTML file
-    const navBarList = document.getElementById('navbar__list')
-    // appending element to the navBarList
-    navBarList.appendChild(fragment);
 };
-  
 
-buildNav();           
 
 // Getting the largest value that's less or equal to the number
 const offset = (section) => {
@@ -61,50 +53,43 @@ const offset = (section) => {
  // add the active class
 const addActive = (conditional, section) => {
     if(conditional) {
-        section.classList.add('your-active-class');
-        section.style.cssText = "background-color: #FF0000";
-        const sectionId = section.id.slice(7,8) -1;
-        //add background-color to active navigation 
-        navMenu.childNodes[sectionId].style.cssText="background-color:#FF0000";
-
-
+        section.classList.add('active');
+        section.style.backgroundColor = "#FF0000";
+        // extract index from section id
+        const sectionId = +section.id[section.id.length - 1] - 1;
+        //add background-color to active navigation
+        navMenu.childNodes[sectionId].style.backgroundColor="#FF0000";
     };
 };
 
  // remove the active class
 const removeActive = (section) => {
-    section.classList.remove('your-active-class');
-    section.style.cssText = "background-color: linear-gradient(0deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.2) 100%)";
-    const sectionId = section.id.slice(7,8) -1;
-    //remove background-color to active navigation 
-    navMenu.childNodes[sectionId].style.cssText="background-color:white";
+    section.classList.remove('active');
+    section.style.backgroundColor = "linear-gradient(0deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.2) 100%)";
+    // extract index from section id
+    const sectionId = +section.id[section.id.length - 1] - 1;
+    //remove background-color to active navigation
+    navMenu.childNodes[sectionId].style.backgroundColor="white";
 
 };
 
-//implementating the sectionActivation function
-
-
+//implementing the sectionActivation function
 const sectionActivation = () => {
     sections.forEach(section => {
         const elementOffset = offset(section);
 
-        inviewport = () => elementOffset < 150 && elementOffset >= -150;
-
         removeActive(section);
-        addActive(inviewport(),section);
+        addActive(elementOffset < 150 && elementOffset >= -150, section);
     });
 };
 
-window.addEventListener('scroll' ,sectionActivation);
 
 // Scroll to anchor ID using scrollTO event
-
 const scrolling = () => {
-
     const links = document.querySelectorAll('.navbar__menu a');
     links.forEach(link => {
         link.addEventListener('click', () => {
-            for(i = 0 ; i<sections ; i++){
+            for(i = 0 ; i < sections ; i++){
                 sections[i].addEventListener("click",sectionScroll(link));
                 link.preventDefault();
                 document.querySelector(this.getAttribute('link')).scrollIntoView({
@@ -116,7 +101,11 @@ const scrolling = () => {
 
 };
 
-scrolling();
+document.addEventListener("DOMContentLoaded", () => {
+    buildNav();
+    scrolling();
 
+    window.addEventListener('scroll' ,sectionActivation);
+})
 
 // End of Code
