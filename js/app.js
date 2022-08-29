@@ -32,8 +32,7 @@ const addActiveSection = (conditional, section) => {
 // remove the active class
 const removeActiveSection = (section) => {
   section.classList.remove("active");
-  section.style.backgroundColor =
-    "linear-gradient(0deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.2) 100%)";
+  section.style.backgroundColor = "";
   // extract index from section id
   const sectionId = +section.id[section.id.length - 1] - 1;
   //remove background-color to active navigation
