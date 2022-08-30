@@ -44,4 +44,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Register each section to the observer
   sections.forEach((section) => observer.observe(section));
+
+  // Smooth scrolling when anchor links are clicked
+  document.querySelectorAll("a.menu__link").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      document
+        .querySelector(link.href.substring(link.href.indexOf("#")))
+        ?.scrollIntoView({
+          behavior: "smooth",
+        });
+    });
+  });
 });
